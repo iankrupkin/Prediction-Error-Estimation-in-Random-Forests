@@ -1,6 +1,6 @@
-source("~/data-generation.R")
-source("~/errxy.R")
-source("~/oob-setup.R")
+source("~/Functions/data-generation.R")
+source("~/Functions/errxy.R")
+source("~/Functions/oob-setup.R")
 
 err.full.acc <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
