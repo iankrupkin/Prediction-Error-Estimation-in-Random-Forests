@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 ---
 
 ```{r}
-source("~/big-func.R")
+source("~/Functions/big-func.R")
 
 n <- 50
 p <- 10
