@@ -11,7 +11,7 @@ err.full.oob <- function(x){
   return(data.frame(errs))
 }
 
-oob.est.full <- function(x){
+fdo <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   model <- mtry.tune(data)
   oob.err.est <- model[["prediction.error"]]

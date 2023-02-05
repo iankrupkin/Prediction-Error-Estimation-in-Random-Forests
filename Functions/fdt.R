@@ -19,7 +19,7 @@ err.full.acc <- function(x){
   return(data.frame(errs))
 }
 
-acc.est.full <- function(x){
+fdt <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   recipe <- recipe(class~., data = data, strata=class)
   model <- rand_forest(mtry = tune(), trees = 500, min_n = 5) %>% set_engine("randomForest") %>% set_mode("classification")

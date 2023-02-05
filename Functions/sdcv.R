@@ -22,7 +22,7 @@ err.cv.split <- function(x){
   return(data.frame(errs))
 }
 
-cv.est.split <- function(x){
+sdcv <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   data.split <- initial_split(data, 0.75, strata = class)
   data.train <- training(data.split)

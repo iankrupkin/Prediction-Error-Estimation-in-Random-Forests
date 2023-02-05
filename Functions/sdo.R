@@ -14,7 +14,7 @@ err.split.oob <- function(x){
   return(data.frame(errs))
 }
 
-oob.est.split <- function(x){
+sdo <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   data.split <- initial_split(data, 0.75, strata = class)
   data.train <- training(data.split)

@@ -21,7 +21,7 @@ err.split.acc <- function(x){
   return(data.frame(errs))
 }
 
-acc.est.split <- function(x){
+sdt <- function(x){
   data.train <- data.frame(pmap(list(round(0.75*0.25*n)+1,p,prop),power.data.2))
   data.validation <- data.frame(pmap(list(round(0.75*0.75*n)+1,p,prop),power.data.2))
   data.test <- data.frame(pmap(list(0.25*n,p,prop),power.data.2))
