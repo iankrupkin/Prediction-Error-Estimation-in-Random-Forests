@@ -7,14 +7,14 @@ date: "`r Sys.Date()`"
 ```{r}
 source("~/Functions/big-func.R")
 
-n <- 50
-p <- 10
-prop <- 0.5
-reps <- 5
-strat <- "sdo"
+n <- 1000
+p <- 1000
+prop <- 0.83
+reps <- 1
+strat <- "sdcv"
 
 tic()
-data <- future_map_dfr(1:reps,sdo)
+data <- future_map_dfr(1:reps,sdcv)
 write.csv(data, file = file.path("~/Prediction-Error-Estimation-in-Random-Forests/Simulations", paste(paste(strat,n,p,prop, sep = "_"),".csv", sep = "")))
 toc()
 ```
