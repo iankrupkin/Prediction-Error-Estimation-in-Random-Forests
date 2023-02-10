@@ -19,7 +19,10 @@ err.cv.split <- function(x){
   data2 <- data.frame(pmap(list(n,p,prop),power.data.2))
   preds <- predict(model.best.fit, data2)
   errs <- sum(preds$.pred_class != data2$class)/length(data2$class)
-  return(data.frame(errs))
+  dat <- as.data.frame(cbind(data2$class, preds))
+  errs_fpr <- sum(dat$`data2$class`==1 & dat$.pred_class==2)/(sum(dat$.pred_class==2))
+  errs_fnr <- sum(dat$`data2$class`==2 & dat$.pred_class==1)/(sum(dat$`data2$class`==1))
+  return(data.frame(errs, errs_fpr,errs_fnr))
 }
 
 sdcv <- function(x){
@@ -39,8 +42,10 @@ sdcv <- function(x){
   df <- model.best.fit %>% 
     predict(new_data = data.test) %>%
     cbind(data.test)
-  error.est = sum(df$.pred_class != df$class)/length(df$class)
-  errxy <- map_dfr(1:1000, errxy2, model=model.best.fit) %>% summarise(errxy = mean(errs))
-  err <- future_map_dfr(1:100, err.cv.split) %>% summarise(err = mean(errs))
-  return(data.frame(error.est,errxy,err, n, p, prop))
+  err.hat = sum(df$.pred_class != df$class)/length(df$class)
+  fpr.hat <- sum(df$class==1 & df$.pred_class==2)/(sum(df$.pred_class==2))
+  fnr.hat <- sum(df$class==2 & df$.pred_class==1)/(sum(df$class==1))
+  errxy <- map_dfr(1:100, errxy2, model=model.best.fit) %>% summarise(errxy = mean(errs), errxy_fpr = mean(errs_fpr), errxy_fnr = mean(errs_fnr))
+  err <- map_dfr(1:100, err.cv.split) %>% summarise(err = mean(errs), err_fpr = mean(errs_fpr),err_fnr = mean(errs_fnr))
+  return(data.frame(err.hat, fpr.hat, fnr.hat, errxy, err, n, p, prop))
 }

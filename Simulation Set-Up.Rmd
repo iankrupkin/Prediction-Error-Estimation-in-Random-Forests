@@ -7,9 +7,9 @@ date: "`r Sys.Date()`"
 ```{r}
 source("~/Functions/big-func.R")
 
-n <- 1000
-p <- 1000
-prop <- 0.83
+n <- 50
+p <- 10
+prop <- 0.5
 reps <- 1
 strat <- "sdcv"
 
