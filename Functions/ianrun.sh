@@ -12,5 +12,4 @@
 module load r
 
 
-R CMD BATCH big-func.R
-
+R CMD BATCH Functions/big-func.R
