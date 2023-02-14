@@ -12,5 +12,5 @@
 module load r
 
 
-R CMD BATCH ianrun.R
+R CMD BATCH big-func.R
 
