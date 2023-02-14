@@ -17,10 +17,10 @@ n <- 50
 p <- 10
 prop <- 0.5
 reps <- 1
-strat <- "sdcv"
+strat <- "fdo"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,sdcv)
+data <- future_map_dfr(1:reps,fdo)
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
