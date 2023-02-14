@@ -16,7 +16,7 @@ plan(multisession, workers = 50)
 n <- 50
 p <- 10
 prop <- 0.5
-reps <- 1
+reps <- 1000
 strat <- "fdo"
 
 start_time <- Sys.time()
