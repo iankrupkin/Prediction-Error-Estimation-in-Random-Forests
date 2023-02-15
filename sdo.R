@@ -1,6 +1,6 @@
-source("~/data-generation.R")
-source("~/errxy.R")
-source("~/oob-setup.R")
+source("data-generation.R")
+source("errxy.R")
+source("oob-setup.R")
 
 err.split.oob <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
