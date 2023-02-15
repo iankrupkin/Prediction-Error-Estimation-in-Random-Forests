@@ -1,6 +1,6 @@
-source("~/Functions/data-generation.R")
-source("~/Functions/errxy.R")
-source("~/Functions/oob-setup.R")
+source("~/data-generation.R")
+source("~/errxy.R")
+source("~/oob-setup.R")
 
 err.split.acc <- function(x){
   data.train <- data.frame(pmap(list(round(0.75*0.25*n)+1,p,prop),power.data.2))
