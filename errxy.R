@@ -5,7 +5,7 @@ errxy <- function(x,model){
   errs_fpr <- sum(dat$V1==1 & dat$V2==2)/(sum(dat$V2==2))
   errs_fnr <- sum(dat$V1==2 & dat$V2==1)/(sum(dat$V1==1))
   errs <- sum(preds[["predictions"]] != data$class)/length(data$class)
-  return(data.frame(errs_fpr,errs_fnr))
+  return(data.frame(errs, errs_fpr,errs_fnr))
 }
 
 errxy2 <- function(x, model){
