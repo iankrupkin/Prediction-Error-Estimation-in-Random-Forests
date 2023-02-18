@@ -11,7 +11,7 @@ source("sdt.R")
 source("sdo.R")
 source("sdcv.R")
 
-plan(multisession, workers = 50)
+plan(multisession, workers = 100)
 
 n <- 100
 p <- 10
