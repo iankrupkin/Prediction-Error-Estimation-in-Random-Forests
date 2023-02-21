@@ -13,14 +13,14 @@ source("sdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 1000
+n <- 100
 p <- 10
 prop <- 0.83
 reps <- 1000
-strat <- "fdo"
+strat <- "sdt"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,fdo)
+data <- future_map_dfr(1:reps,sdt)
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
