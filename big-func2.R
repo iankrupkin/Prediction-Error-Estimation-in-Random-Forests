@@ -13,9 +13,9 @@ source("sdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 1000
+n <- 100
 p <- 100
-prop <- 0.5
+prop <- 0.83
 reps <- 1000
 strat <- "fdo"
 
