@@ -6,7 +6,7 @@ library(future)
 library(tictoc)
 
 source("fdt.R")
-source("fdo.R")
+source("newfdo.R")
 source("sdt.R")
 source("sdo.R")
 source("sdcv.R")
@@ -17,10 +17,11 @@ n <- 100
 p <- 10
 prop <- 0.5
 reps <- 1000
-strat <- "sdo"
+n.holdout <- 20000
+strat <- "fdo"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,sdo)
+data <- future_map_dfr(1:reps,fdo) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
