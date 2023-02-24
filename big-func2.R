@@ -5,7 +5,6 @@ library(furrr)
 library(future)
 library(tictoc)
 
-source("fdt.R")
 source("newfdo.R")
 source("newsdt.R")
 source("newsdo.R")
@@ -13,8 +12,8 @@ source("newsdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 100
-p <- 100
+n <- 50
+p <- 10
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
