@@ -1,5 +1,4 @@
 source("data-generation.R")
-source("errxy.R")
 source("oob-setup.R")
 
 sdt <- function(x){
@@ -29,3 +28,4 @@ sdt <- function(x){
   errxy_fnr <- sum(dat2$V1==2 & dat2$V2==1)/(sum(dat2$V1==1))
   return(data.frame(err.hat, fpr.hat, fnr.hat, errxy, errxy_fpr, errxy_fnr, n, p, prop))
 }
+
