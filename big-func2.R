@@ -7,14 +7,14 @@ library(tictoc)
 
 source("fdt.R")
 source("newfdo.R")
-source("sdt.R")
+source("newsdt.R")
 source("sdo.R")
 source("sdcv.R")
 
 plan(multisession, workers = 100)
 
 n <- 1000
-p <- 10
+p <- 100
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
