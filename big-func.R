@@ -12,7 +12,7 @@ source("newsdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 100
+n <- 1000
 p <- 1000
 prop <- 0.83
 reps <- 1000
