@@ -13,14 +13,14 @@ source("newsdcv.R")
 plan(multisession, workers = 100)
 
 n <- 100
-p <- 10
-prop <- 0.83
+p <- 1000
+prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
-strat <- "sdcv"
+strat <- "fdo"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,sdcv) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
+data <- future_map_dfr(1:reps,fdo) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
