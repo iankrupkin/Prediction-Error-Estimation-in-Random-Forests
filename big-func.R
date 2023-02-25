@@ -12,9 +12,9 @@ source("newsdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 1000
+n <- 100
 p <- 10
-prop <- 0.83
+prop <- 0.7
 reps <- 1000
 n.holdout <- 20000
 strat <- "sdcv"
