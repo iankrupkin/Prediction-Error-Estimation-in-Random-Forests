@@ -15,7 +15,7 @@ plan(multisession, workers = 100)
 n <- 50
 p <- 10
 prop <- 0.5
-reps <- 550
+reps <- 750
 n.holdout <- 20000
 strat <- "fdo"
 
