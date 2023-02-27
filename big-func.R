@@ -13,8 +13,8 @@ source("newfdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 100
-p <- 100
+n <- 1000
+p <- 10
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
