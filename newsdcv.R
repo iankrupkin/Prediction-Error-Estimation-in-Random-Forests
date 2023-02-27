@@ -2,11 +2,11 @@ source("data-generation.R")
 source("oob-setup.R")
 
 sdcv <- function(x){
-  data <- data.frame(pmap(list(n,p,prop),power.data.2))
+  data <- data.frame(pmap(list(n,p,prop),null.data.2))
   data.split <- initial_split(data, 0.75, strata = class)
   data.train <- training(data.split)
   data.test <- testing(data.split)
-  ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
+  ho.data <- data.frame(pmap(list(n.holdout,p,prop),null.data.2))
   recipe <- recipe(class~., data = data.train, strata=class)
   model <- rand_forest(mtry = tune(), trees = 500, min_n = 5) %>% set_engine("randomForest") %>% set_mode("classification")
   workflow <- workflow() %>% add_model(model) %>% add_recipe(recipe)
