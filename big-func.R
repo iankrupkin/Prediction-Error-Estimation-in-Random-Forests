@@ -15,7 +15,7 @@ plan(multisession, workers = 100)
 
 n <- 500
 p <- 100
-prop <- 0.83
+prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
 strat <- "sdcv"
