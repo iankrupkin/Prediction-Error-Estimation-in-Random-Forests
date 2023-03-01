@@ -15,7 +15,7 @@ plan(multisession, workers = 100)
 
 n <- 500
 p <- 1000
-prop <- 0.5
+prop <- 0.7
 reps <- 1000
 n.holdout <- 20000
 strat <- "fdo"
@@ -28,4 +28,4 @@ sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
 print(end_time - start_time)
 sink()
 
-write.csv(data, paste0(paste(paste(strat,n,p,prop,"null", sep = "_")),".csv"))
+write.csv(data, paste0(paste(paste(strat,n,p,prop, sep = "_")),".csv"))
