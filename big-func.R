@@ -14,14 +14,14 @@ source("newfdcv.R")
 plan(multisession, workers = 100)
 
 n <- 250
-p <- 100
-prop <- 0.83
+p <- 10
+prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
-strat <- "fdo"
+strat <- "sdt"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,fdo) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
+data <- future_map_dfr(1:reps,sdt) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
