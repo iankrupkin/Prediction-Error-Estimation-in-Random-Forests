@@ -14,8 +14,8 @@ source("newfdcv.R")
 plan(multisession, workers = 100)
 
 n <- 500
-p <- 10
-prop <- 0.5
+p <- 100
+prop <- 0.7
 reps <- 1000
 n.holdout <- 20000
 strat <- "sdo"
