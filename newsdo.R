@@ -2,7 +2,7 @@ source("data-generation.R")
 source("oob-setup.R")
 
 sdo <- function(x){
-  data <- data.frame(pmap(list(n,p,prop),power.data.3))
+  data <- data.frame(pmap(list(n,p,prop),power.data.2))
   data.split <- initial_split(data, 0.75, strata = class)
   data.train <- training(data.split)
   data.test <- testing(data.split)
