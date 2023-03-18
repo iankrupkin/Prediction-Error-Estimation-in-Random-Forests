@@ -21,7 +21,7 @@ n.holdout <- 20000
 strat <- "fdcvlog"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,fdcvlog) %>% mutate(err = mean(errxy), err_fpr = mean(errxy_fpr), err_fnr = mean(errxy_fnr))
+data <- future_map_dfr(1:reps,fdcvlog) %>% mutate(err = mean(errxy))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
