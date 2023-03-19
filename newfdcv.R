@@ -25,20 +25,14 @@ fdcv <- function(x){
   return(data.frame(err.hat, fpr.hat, fnr.hat, errxy, errxy_fpr, errxy_fnr, n, p, prop))
 }
 
-fdcvlog <- function(x){
+fdcv2 <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
-  recipe <- recipe(class~., data = data, strata=class)
-  model <- logistic_reg() %>% set_engine("glm") %>% set_mode("classification")
-  workflow <- workflow() %>% add_model(model) %>% add_recipe(recipe)
-  folds <- vfold_cv(data, v=10)
-  tune <- workflow %>% tune_grid(resamples = folds)
-  model.best <- finalize_model(model, select_best(tune, "accuracy"))
-  model.best.fit <- workflow() %>% add_model(model.best) %>% add_recipe(recipe) %>% 
-    fit(data = data)
-  err.hat <- tune %>% collect_metrics() %>% filter(.metric == "accuracy") %>% summarise(err.hat = 1-mean)
-  preds <- predict(model.best.fit,ho.data)
-  dat2 <- as.data.frame(cbind(ho.data$class, preds$.pred_class))
-  errxy <- sum(dat2$V1 != dat2$V2)/length(dat2$V2)
+  train.control <- trainControl(method = "cv", number = 10)
+  model <- train(class~., data = data, method = "rf", tuneGrid=data.frame(mtry=sqrt(p)), trees = 500, min_n = 5, trControl = train.control)
+  err.hat <- 1-model[["results"]][["Accuracy"]]
+  preds <- predict(model, ho.data)
+  dat2 <- as.data.frame(cbind(ho.data$class, preds))
+  errxy <- sum(dat2$V1 != dat2$preds)/length(dat2$V1)
   return(data.frame(err.hat, errxy, n, p, prop))
 }
