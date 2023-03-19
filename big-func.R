@@ -14,7 +14,7 @@ source("newfdcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 100
+n <- 50
 p <- 10
 prop <- 0.5
 reps <- 1000
