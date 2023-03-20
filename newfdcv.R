@@ -28,11 +28,8 @@ fdcv <- function(x){
 fdcv2 <- function(x){
   data <- data.frame(pmap(list(n,p,prop),power.data.2))
   ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
-  set.seed(3)
-  train.control <- trainControl(method = "cv", number = 10)
-  mtry <- sqrt(ncol(data))
-  tunegrid <- expand.grid(.mtry=mtry)
-  model <- train(class~., data = data, method = "rf", tuneGrid=tunegrid, metric="Accuracy", trees = 500, min_n = 5, trControl = train.control)
+  train.control <- trainControl(method = "cv", number = 4)
+  model <- train(class~., data = data, method = "rf", tuneGrid=data.frame(mtry=sqrt(p)), trees = 500, min_n = 5, trControl = train.control)
   err.hat <- 1-model[["results"]][["Accuracy"]]
   preds <- predict(model, ho.data)
   dat2 <- as.data.frame(cbind(ho.data$class, preds))
