@@ -15,7 +15,7 @@ source("fdcvlogreg.R")
 
 plan(multisession, workers = 100)
 
-n <- 250
+n <- 500
 p <- 10
 prop <- 0.5
 reps <- 1000
