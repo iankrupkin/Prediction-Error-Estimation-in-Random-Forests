@@ -17,6 +17,16 @@ power.data.2 <- function(n,p,prop) {
   return(data)
 }
 
+data.generation <- function(n,p,prop){
+  data <- data.frame()
+  class <- as.factor(c(rep(1,prop*n),rep(2,(1-prop)*n)))
+  data <- data.frame(class)
+  variables <- 1:p
+  data[paste0('X', variables)] <- suppressMessages(map_dfc(variables, 
+                                                            ~c(rnorm(prop*n,0,1),rnorm((1-prop)*n,0.75,1))))
+  return(data)
+}
+
 power.data.3 <- function(n,p,prop) {
   data <- data.frame()
   class <- as.factor(c(rep(1,prop*n),rep(2,(1-prop)*n+1)))
