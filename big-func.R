@@ -15,15 +15,15 @@ source("fdcvlogreg.R")
 
 plan(multisession, workers = 100)
 
-n <- 750
-p <- 100
+n <- 10
+p <- 10
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
-strat <- "fdo"
+strat <- "sdo"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,fdo) %>% mutate(err = mean(errxy))
+data <- future_map_dfr(1:reps,sdo) %>% mutate(err = mean(errxy, na.rm=TRUE))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
