@@ -26,8 +26,8 @@ fdcv <- function(x){
 }
 
 fdcv2 <- function(x){
-  data <- data.frame(pmap(list(n,p,prop),power.data.2))
-  ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
+  data <- data.frame(matrix(rnorm(n * p), nrow = n),class=as.factor(c(rep(1,prop*n),rep(2,(1-prop)*n))))
+  ho.data <- data.frame(matrix(rnorm(n.holdout * p), nrow = n.holdout),class=as.factor(c(rep(1,prop*n.holdout),rep(2,(1-prop)*n.holdout))))
   train.control <- trainControl(method = "cv", number = 4)
   model <- train(class~., data = data, method = "rf", tuneGrid=data.frame(mtry=sqrt(p)), trees = 500, min_n = 5, trControl = train.control)
   err.hat <- 1-model[["results"]][["Accuracy"]]
