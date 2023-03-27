@@ -20,10 +20,10 @@ p <- 100
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
-strat <- "sdt"
+strat <- "logreg"
 
 start_time <- Sys.time()
-data <- future_map_dfr(1:reps,sdt) %>% mutate(err = mean(errxy, na.rm=TRUE))
+data <- future_map_dfr(1:reps,logreg) %>% mutate(err = mean(errxy, na.rm=TRUE))
 end_time <- Sys.time()
 
 sink(paste0("time_",strat,"_",n,"_",p,"_",prop,".csv"))
