@@ -2,8 +2,8 @@ source("data-generation.R")
 source("oob-setup.R")
 
 fdcvlogreg <- function(x){
-  data <- data.frame(pmap(list(n,p,prop),power.data.2))
-  ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
+  data <- data.frame(pmap(list(n,p,prop),bates.data.generation))
+  ho.data <- data.frame(pmap(list(n.holdout,p,prop),bates.data.generation))
   train.control <- trainControl(method = "cv", number = 4)
   model <- train(class~., data = data, method = "glm", family=binomial, trControl = train.control)
   err.hat <- 1-model[["results"]][["Accuracy"]]

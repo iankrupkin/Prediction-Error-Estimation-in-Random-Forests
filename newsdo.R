@@ -2,11 +2,11 @@ source("data-generation.R")
 source("oob-setup.R")
 
 sdo <- function(x){
-  data <- data.frame(pmap(list(n,p,prop),power.data.2))
+  data <- data.frame(pmap(list(n,p,prop),data.generation))
   data.split <- initial_split(data, 0.75, strata = class)
   data.train <- training(data.split)
   data.test <- testing(data.split)
-  ho.data <- data.frame(pmap(list(n.holdout,p,prop),power.data.2))
+  ho.data <- data.frame(pmap(list(n.holdout,p,prop),data.generation))
   model <- mtry.tune(data.train)
   preds <- predict(model, data.test)
   err.hat <- sum(preds[["predictions"]] != data.test$class)/length(data.test$class)
