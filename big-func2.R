@@ -15,10 +15,10 @@ source("fdcvlogreg.R")
 
 plan(multisession, workers = 100)
 
-n <- 560
+n <- 100
 p <- round(n/5)
 prop <- 0.5
-reps <- 5000
+reps <- 1000
 n.holdout <- 20000
 strat <- "fdcvlogreg"
 

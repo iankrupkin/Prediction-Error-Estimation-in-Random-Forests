@@ -21,10 +21,8 @@ bates.data.generation <- function(n,p,prop) {
   data <- data.frame()
   class <- as.factor(c(rep(1,prop*n),rep(2,(1-prop)*n)))
   data <- data.frame(class)
-  variables1 <- 1:round(p/5)
-  variables2 <- round(p/5+1):p
-  data[paste0('X', variables1)] <- suppressMessages(map_dfc(variables1, 
+  variables <- 1:p
+  data[paste0('X', variables)] <- suppressMessages(map_dfc(variables, 
                                                             ~c(rnorm(prop*n,0,1),rnorm((1-prop)*n,0.75,1))))
-  data[paste0('X', variables2)] <- suppressMessages(map_dfc(variables2, ~rnorm(n,0,1)))
   return(data)
 }
