@@ -6,12 +6,12 @@ library(future)
 library(tictoc)
 library(caret)
 
-source("newfdo.R")
-source("newsdt.R")
-source("newsdo.R")
-source("newsdcv.R")
-source("newfdcv.R")
-source("fdcvlogreg.R")
+source("fdo.R")
+source("sdt.R")
+source("sdo.R")
+source("sdcv.R")
+source("fdcv.R")
+source("lgcv.R")
 
 plan(multisession, workers = 100)
 
