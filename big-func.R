@@ -13,7 +13,7 @@ source("sdcv.R")
 source("fdcv.R")
 source("lgcv.R")
 
-plan(multisession, workers = 100)
+plan(multisession, workers = 50)
 
 n <- 50
 p <- 10
