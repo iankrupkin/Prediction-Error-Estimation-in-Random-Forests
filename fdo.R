@@ -10,5 +10,5 @@ fdo <- function(x){
   preds <- predict(model,ho.data)
   dat2 <- as.data.frame(cbind(ho.data$class, preds[["predictions"]]))
   errxy <- sum(dat2$V1 != dat2$V2)/length(dat2$V2)
-  return(data.frame(err.hat, errxy, n, p, prop))
+  return(data.frame(err.hat, errxy, n, p, prop,mu2))
 }

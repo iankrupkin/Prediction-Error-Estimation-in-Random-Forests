@@ -15,19 +15,20 @@ source("lgcv.R")
 
 plan(multisession, workers = 100)
 
-n <- 560
-p <- round(n/5)
+n <- 500
+p <- 10
 prop <- 0.5
 reps <- 1000
 n.holdout <- 20000
+mu2 <- 0.2
 strat <- "fdcv"
 
 start_time <- Sys.time()
 data <- future_map_dfr(1:reps,fdcv) %>% mutate(err = mean(errxy, na.rm=TRUE))
 end_time <- Sys.time()
 
-sink(paste0("time_",strat,"_",n,"_",p,"_",prop,"_",reps,".csv"))
+sink(paste0("time_",strat,"_",n,"_",p,"_",prop,"_",mu2,"_",reps,".csv"))
 print(end_time - start_time)
 sink()
 
-write.csv(data, paste0(paste(paste(strat,n,p,prop,reps, sep = "_")),".csv"))
+write.csv(data, paste0(paste(paste(strat,n,p,prop,mu2,reps, sep = "_")),".csv"))

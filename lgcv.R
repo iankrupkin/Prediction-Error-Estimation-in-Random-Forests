@@ -10,5 +10,5 @@ lgcv <- function(x){
   preds <- predict(model, ho.data)
   dat2 <- as.data.frame(cbind(ho.data$class, preds))
   errxy <- sum(dat2$V1 != dat2$preds)/length(dat2$V1)
-  return(data.frame(err.hat, errxy, n, p, prop))
+  return(data.frame(err.hat, errxy, n, p, prop, mu2))
 }
