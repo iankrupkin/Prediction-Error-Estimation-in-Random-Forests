@@ -6,7 +6,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --job-name="func2"
 #SBATCH -p amd # This is the default partition
-#SBATCH --output=log_filename.log #if you do not use this, it will create a slurm-[jobid].out as the log
+#SBATCH --output=log_filename2.log #if you do not use this, it will create a slurm-[jobid].out as the log
 
 #your other command down here
 module load r
