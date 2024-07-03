@@ -10,7 +10,7 @@ data.generation <- function(n,p,prop,mu2) {
 
 data.generation.noisy <- function(n,p,prop,mu2) {
   data <- data.frame()
-  class <- as.factor(c(rep(1,prop*n),rep(2,(1-prop)*n)))
+  class <- as.factor(c(rep(1,ceiling(prop*n)),rep(2,floor((1-prop)*n))))
   data <- data.frame(class)
   if(p == 10){
     variables1 <- 1:2
@@ -19,7 +19,7 @@ data.generation.noisy <- function(n,p,prop,mu2) {
     variables1 <- 1:10
     variables2 <- 11:100}
   data[paste0('X', variables1)] <- suppressMessages(map_dfc(variables1, 
-                                           ~c(rnorm(prop*n,0,1),rnorm((1-prop)*n,mu2,1))))
+                                           ~c(rnorm(ceiling(prop*n),0,1),rnorm(floor((1-prop)*n),mu2,1))))
   data[paste0('X', variables2)] <- suppressMessages(map_dfc(variables2, ~rnorm(n,0,1)))
   return(data)
 }

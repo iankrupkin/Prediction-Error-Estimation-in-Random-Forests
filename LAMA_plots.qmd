@@ -1,0 +1,143 @@
+---
+title: "plotting results"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+author: Jo Hardin
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+With the hopes of running more simulations for the LAMA publication, I wanted to first replicate our results (orange on top of green) and then make the two groups overlap more to see if we could get the differences in error rates to diverge a bit more.  Unfortunately, I think the LAMA plots were done with `mu2 = 0` which is very different from what we showed in the paper. Indeed, when I change `mu2 = 0.75` the lines diverge indeed, but they flip back to the direction consistent with Bates et al. (green on top of orange).
+
+In general the result is not terrible.  We could go back to the drawing board and perform a simulation study describing the impact of difference in error rates for different settings.  However, such an approach would be a totally new paper, and a totally new paper is not in the works right now.
+
+Below I provide a few simulations to demonstrate what went wrong with the original work.  It is documented here in case there is room for someone else to pick up the project in the future.
+
+## LAMA results
+
+The original work was supposed to measure `mu2 = 0.75`, but as far as I can tell, it measured `mu2 = 0`  (i.e., the groups came from the same population).
+
+Note that there are two functions `fdcv.R` and `fdcv_noisy.R`.  The former sets all the variables to have a center of `mu2` the later sets only the first few variables to have a center of `mu2`.  Because we've set `mu2=0`, it doesn't matter which function we use.
+
+```
+n <- c(10,25,50,75,100,250,500,750,1000,25,50,75,100,250,500,750,1000)
+p <- c(rep(10,9),rep(100,8))
+prop <- rep(0.5,17)
+mu2 <- rep(0, 17)
+
+rep_numb <- 1:100#1000
+n.holdout <- 20000
+strat <- "fdcv"
+
+data.0 <- err_input |> 
+        furrr::future_pmap(fdcv)  |> 
+        list_rbind() |> 
+        mutate(err = mean(errxy, na.rm=TRUE))
+```
+
+```{r}
+data.0 <-read_csv("fdcv_0.csv")
+```
+
+
+```{r}
+data.0 |> 
+  group_by(p,n) |> 
+  summarize(mad_err = mean(abs(err.hat - err)), 
+            mad_errxy = mean(abs(err.hat - errxy))) |> 
+  ggplot() +
+  geom_line(aes(x = n, y = mad_err), color = "green")+
+  geom_line(aes(x = n, y = mad_errxy), color = "orange") + 
+  geom_point(aes(x = n, y = mad_err), color = "green")+
+  geom_point(aes(x = n, y = mad_errxy), color = "orange") + 
+  facet_wrap(~p) + 
+  ggtitle("Means of both groups are zero")
+```
+
+# Actually changing `mu2`
+
+We have now change `mu2` to be 0.75.  Note that within `map()` we are still using the function `fdcv()` which sets all the variables in group2 to have a mean of 0.75.
+
+```
+n <- c(10,25,50,75,100,250,500,750,1000,25,50,75,100,250,500,750,1000)
+p <- c(rep(10,9),rep(100,8))
+prop <- rep(0.5,17)
+mu2 <- rep(0.75, 17)
+
+rep_numb <- 1:100#1000
+n.holdout <- 20000
+strat <- "fdcv"
+
+data.75.all <- err_input |> 
+        furrr::future_pmap(fdcv)  |> 
+        list_rbind() |> 
+        mutate(err = mean(errxy, na.rm=TRUE))
+```
+
+```{r}
+data.75.all <-read_csv("fdcv_0.75_all.csv")
+```
+
+
+```{r}
+data.75.all |> 
+  group_by(p,n) |> 
+  summarize(mad_err = mean(abs(err.hat - err)), 
+            mad_errxy = mean(abs(err.hat - errxy))) |> 
+  ggplot() +
+  geom_line(aes(x = n, y = mad_err), color = "green")+
+  geom_line(aes(x = n, y = mad_errxy), color = "orange") + 
+  geom_point(aes(x = n, y = mad_err), color = "green")+
+  geom_point(aes(x = n, y = mad_errxy), color = "orange") + 
+  facet_wrap(~p) + 
+  ggtitle("First group is 0; all variables in second group are 0.75")
+```
+
+
+# Changing only a few variables with `mu2`
+
+Notice that the function run within `map()` is now `fdcv_noisy()`.
+
+```
+n <- c(10,25,50,75,100,250,500,750,1000,25,50,75,100,250,500,750,1000)
+p <- c(rep(10,9),rep(100,8))
+prop <- rep(0.5,17)
+mu2 <- rep(0, 17)
+
+rep_numb <- 1:100#1000
+n.holdout <- 20000
+strat <- "fdcv"
+
+data.75.noisy <- err_input |> 
+        furrr::future_pmap(fdcv_noisy)  |> 
+        list_rbind() |> 
+        mutate(err = mean(errxy, na.rm=TRUE))
+```
+
+```{r}
+data.75.noisy <-read_csv("fdcv_0.75_noisy.csv")
+```
+
+```{r}
+data.75.noisy |> 
+  group_by(p,n) |> 
+  summarize(mad_err = mean(abs(err.hat - err)), 
+            mad_errxy = mean(abs(err.hat - errxy))) |> 
+  ggplot() +
+  geom_line(aes(x = n, y = mad_err), color = "green")+
+  geom_line(aes(x = n, y = mad_errxy), color = "orange") + 
+  geom_point(aes(x = n, y = mad_err), color = "green")+
+  geom_point(aes(x = n, y = mad_errxy), color = "orange") + 
+  facet_wrap(~p) + 
+  ggtitle("First group is 0; first few variables in second group are 0.75")
+```
+
+
+
